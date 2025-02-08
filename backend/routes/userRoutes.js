@@ -1,10 +1,12 @@
 const express = require('express');
-const { registerUser, loginUser } = require('../controllers/userController');
 const router = express.Router();
+const userController = require('../controllers/userController');
+const { validateSignup, validateLogin, handleValidationErrors } = require('../middleware/userValidation');
 
-router.post('/register', registerUser);
-router.post('/login', loginUser);
+// Route pour l'inscription
+router.post('/signup', validateSignup, handleValidationErrors, userController.signup);
 
+// Route pour la connexion
+router.post('/login', validateLogin, handleValidationErrors, userController.login);
 
 module.exports = router;
-//

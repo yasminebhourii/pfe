@@ -1,10 +1,12 @@
 const express = require('express');
-const authController = require('../controllers/authController');
 const router = express.Router();
+const userController = require('../controllers/userController'); // Import du contrôleur
+const { validateSignup, validateLogin, handleValidationErrors } = require('../middleware/userValidation'); // Import des middlewares
 
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
+// Route pour l'inscription
+router.post('/signup', validateSignup, handleValidationErrors, userController.signup);
 
+// Route pour la connexion
+router.post('/login', validateLogin, handleValidationErrors, userController.login);
 
 module.exports = router;
-//
